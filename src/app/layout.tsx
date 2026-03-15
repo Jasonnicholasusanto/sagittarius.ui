@@ -5,7 +5,7 @@ import { Toaster } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { Geist } from "next/font/google";
 import type { Metadata } from "next";
-import { ThemeProvider } from "@/components/providers/theme-provider";
+import { ThemeProvider } from "@/providers/theme-provider";
 
 const geist = Geist({ subsets: ["latin"], variable: "--font-sans" });
 
