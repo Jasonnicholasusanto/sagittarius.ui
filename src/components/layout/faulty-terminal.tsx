@@ -155,9 +155,9 @@ float digit(vec2 p){
     float f = n * 0.0625;
     
     float isOn = step(0.1, intensity - f);
-    float brightness = isOn * (0.2 + y * 0.8) * (0.75 + x * 0.25);
+    float brightnessPx = isOn * (0.2 + y * 0.8) * (0.75 + x * 0.25);
     
-    return step(0.0, p.x) * step(p.x, 1.0) * step(0.0, p.y) * step(p.y, 1.0) * brightness;
+    return step(0.0, p.x) * step(p.x, 1.0) * step(0.0, p.y) * step(p.y, 1.0) * brightnessPx;
 }
 
 float onOff(float a, float b, float c)
@@ -234,11 +234,12 @@ void main() {
 
 function hexToRgb(hex: string): [number, number, number] {
   let h = hex.replace("#", "").trim();
-  if (h.length === 3)
+  if (h.length === 3) {
     h = h
       .split("")
       .map((c) => c + c)
       .join("");
+  }
   const num = parseInt(h, 16);
   return [
     ((num >> 16) & 255) / 255,
@@ -263,7 +264,7 @@ export default function FaultyTerminal({
   tint = "#ffffff",
   mouseReact = true,
   mouseStrength = 0.2,
-  dpr = Math.min(window.devicePixelRatio || 1, 2),
+  dpr,
   pageLoadAnimation = true,
   brightness = 1,
   className,
@@ -271,8 +272,8 @@ export default function FaultyTerminal({
   ...rest
 }: FaultyTerminalProps) {
   const containerRef = useRef<HTMLDivElement>(null);
-  const programRef = useRef<Program>(null);
-  const rendererRef = useRef<Renderer>(null);
+  const programRef = useRef<Program | null>(null);
+  const rendererRef = useRef<Renderer | null>(null);
   const mouseRef = useRef({ x: 0.5, y: 0.5 });
   const smoothMouseRef = useRef({ x: 0.5, y: 0.5 });
   const frozenTimeRef = useRef(0);
@@ -287,6 +288,11 @@ export default function FaultyTerminal({
     [dither],
   );
 
+  const resolvedDpr = useMemo(() => {
+    if (typeof window === "undefined") return 1;
+    return dpr ?? Math.min(window.devicePixelRatio || 1, 2);
+  }, [dpr]);
+
   const handlePointerUpdate = useCallback((e: PointerEvent) => {
     const ctn = containerRef.current;
     if (!ctn) return;
@@ -295,13 +301,11 @@ export default function FaultyTerminal({
     const x = e.clientX - rect.left;
     const y = e.clientY - rect.top;
 
-    // If pointer is outside the component bounds, move the interaction away
     if (x < 0 || y < 0 || x > rect.width || y > rect.height) {
       mouseRef.current = { x: -9999, y: -9999 };
       return;
     }
 
-    // Normalize to 0..1 for the shader
     mouseRef.current = {
       x: x / rect.width,
       y: 1 - y / rect.height,
@@ -312,8 +316,9 @@ export default function FaultyTerminal({
     const ctn = containerRef.current;
     if (!ctn) return;
 
-    const renderer = new Renderer({ dpr });
+    const renderer = new Renderer({ dpr: resolvedDpr });
     rendererRef.current = renderer;
+
     const gl = renderer.gl;
     gl.clearColor(0, 0, 0, 1);
 
@@ -332,7 +337,6 @@ export default function FaultyTerminal({
           ),
         },
         uScale: { value: scale },
-
         uGridMul: { value: new Float32Array(gridMul) },
         uDigitSize: { value: digitSize },
         uScanlineIntensity: { value: scanlineIntensity },
@@ -361,8 +365,7 @@ export default function FaultyTerminal({
     const mesh = new Mesh(gl, { geometry, program });
 
     function resize() {
-      if (!ctn || !renderer) return;
-      renderer.setSize(ctn.offsetWidth, ctn.offsetHeight);
+      renderer.setSize(ctn!.offsetWidth, ctn!.offsetHeight);
       program.uniforms.iResolution.value = new Color(
         gl.canvas.width,
         gl.canvas.height,
@@ -400,6 +403,7 @@ export default function FaultyTerminal({
         const dampingFactor = 0.08;
         const smoothMouse = smoothMouseRef.current;
         const mouse = mouseRef.current;
+
         smoothMouse.x += (mouse.x - smoothMouse.x) * dampingFactor;
         smoothMouse.y += (mouse.y - smoothMouse.y) * dampingFactor;
 
@@ -410,6 +414,7 @@ export default function FaultyTerminal({
 
       renderer.render({ scene: mesh });
     };
+
     rafRef.current = requestAnimationFrame(update);
     ctn.appendChild(gl.canvas);
 
@@ -427,21 +432,20 @@ export default function FaultyTerminal({
       resizeObserver.disconnect();
 
       if (mouseReact) {
-        window.removeEventListener("pointermove", handlePointerUpdate, {
-          capture: true,
-        } as EventListenerOptions);
-        window.removeEventListener("pointerdown", handlePointerUpdate, {
-          capture: true,
-        } as EventListenerOptions);
+        window.removeEventListener("pointermove", handlePointerUpdate, true);
+        window.removeEventListener("pointerdown", handlePointerUpdate, true);
       }
 
-      if (gl.canvas.parentElement === ctn) ctn.removeChild(gl.canvas);
+      if (gl.canvas.parentElement === ctn) {
+        ctn.removeChild(gl.canvas);
+      }
+
       gl.getExtension("WEBGL_lose_context")?.loseContext();
       loadAnimationStartRef.current = 0;
       timeOffsetRef.current = Math.random() * 100;
     };
   }, [
-    dpr,
+    resolvedDpr,
     pause,
     timeScale,
     scale,
@@ -465,7 +469,7 @@ export default function FaultyTerminal({
   return (
     <div
       ref={containerRef}
-      className={`w-full h-full relative overflow-hidden ${className}`}
+      className={`relative h-full w-full overflow-hidden ${className ?? ""}`}
       style={style}
       {...rest}
     />

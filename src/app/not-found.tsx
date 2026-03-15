@@ -6,6 +6,7 @@ import { useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import { PageMotion } from "@/components/layout/motion-wrapper";
 import FaultyTerminal from "@/components/layout/faulty-terminal";
+import GlitchText from "@/components/glitch-text";
 
 export default function NotFound() {
   const router = useRouter();
@@ -38,11 +39,11 @@ export default function NotFound() {
         <div className="relative z-10 flex min-h-screen items-center justify-center flex-col px-6">
           <div className="w-full max-w-xl rounded-2xl p-8 text-center">
             <div className="space-y-3">
-              <p className="text-[160px] font-extrabold text-muted-foreground leading-none">
+              <p className="text-[160px] font-extrabold text-white leading-none">
                 404
               </p>
 
-              <h1 className="text-3xl font-semibold tracking-tight">
+              <h1 className="text-3xl font-bold tracking-tight">
                 Page not found
               </h1>
 
