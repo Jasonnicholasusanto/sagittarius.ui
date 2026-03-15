@@ -13,7 +13,6 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { FaGoogle } from "react-icons/fa";
 import Link from "next/link";
-import { motion } from "motion/react";
 import { useFormStatus } from "react-dom";
 import { loginAction, loginGoogle, LoginState } from "@/services/authActions";
 import { useActionState } from "react";
@@ -48,7 +47,7 @@ function LoginGoogleButton() {
   );
 }
 
-export function LoginForm({
+export function SignInForm({
   className,
   ...props
 }: React.ComponentProps<"div">) {

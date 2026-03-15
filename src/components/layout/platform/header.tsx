@@ -52,7 +52,7 @@ export default function Header() {
 
   async function handleLogout() {
     await logout();
-    window.location.href = "/auth/logout";
+    window.location.href = "/auth/sign-in";
   }
 
   return (
