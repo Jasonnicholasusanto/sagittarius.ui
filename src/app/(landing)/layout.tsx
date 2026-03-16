@@ -9,7 +9,7 @@ export default function RootLayout({
 }) {
   return (
     <div>
-      <FadeContent blur={true} duration={5000} initialOpacity={0}>
+      <FadeContent blur={true} duration={3000} initialOpacity={0}>
         <div className="fixed inset-0 -z-10 pointer-events-auto min-h-screen">
           <Dither
             waveColor={[0.02, 0.71, 0.83]}

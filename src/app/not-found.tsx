@@ -6,7 +6,8 @@ import { useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import { PageMotion } from "@/components/layout/motion-wrapper";
 import FaultyTerminal from "@/components/layout/faulty-terminal";
-import GlitchText from "@/components/glitch-text";
+import FuzzyText from "@/components/fuzzy-text";
+import { ArrowLeft, HomeIcon } from "lucide-react";
 
 export default function NotFound() {
   const router = useRouter();
@@ -38,29 +39,42 @@ export default function NotFound() {
 
         <div className="relative z-10 flex min-h-screen items-center justify-center flex-col px-6">
           <div className="w-full max-w-xl rounded-2xl p-8 text-center">
-            <div className="space-y-3">
-              <p className="text-[160px] font-extrabold text-white leading-none">
-                404
-              </p>
+            <div className="flex justify-center">
+              <div className="flex flex-col items-center space-y-8">
+                <FuzzyText
+                  baseIntensity={0.2}
+                  hoverIntensity={0.5}
+                  enableHover
+                  fontSize="180px"
+                >
+                  404
+                </FuzzyText>
 
-              <h1 className="text-3xl font-bold tracking-tight">
-                Page not found
-              </h1>
-
-              <p className="text-muted-foreground max-w-md mx-auto">
-                The page you are looking for does not exist, or you may not have
-                access.
-              </p>
+                <FuzzyText
+                  baseIntensity={0.2}
+                  hoverIntensity={0.5}
+                  enableHover
+                  fontSize="40px"
+                >
+                  Page not found
+                </FuzzyText>
+              </div>
             </div>
 
-            <div className="mt-8 flex flex-wrap justify-center gap-3">
-              <Button variant="secondary" onClick={() => router.back()}>
-                Go back
-              </Button>
+            <div className="mt-10 flex items-center justify-center gap-8">
+              <button
+                onClick={() => router.back()}
+                className="group flex h-12 w-12 items-center justify-center rounded-full border border-border bg-background/60 backdrop-blur transition-all hover:border-primary hover:scale-110"
+              >
+                <ArrowLeft className="h-5 w-5 text-muted-foreground transition-colors group-hover:text-primary" />
+              </button>
 
-              <Button asChild>
-                <Link href="/platform">Go to dashboard</Link>
-              </Button>
+              <Link
+                href="/platform"
+                className="group flex h-12 w-12 items-center justify-center rounded-full border border-border bg-background/60 backdrop-blur transition-all hover:border-primary hover:scale-110"
+              >
+                <HomeIcon className="h-5 w-5 text-muted-foreground transition-colors group-hover:text-primary" />
+              </Link>
             </div>
           </div>
         </div>

@@ -25,7 +25,15 @@ export const Endpoints = {
   Watchlists: {
     BaseVersion: "v1",
     Base: "/watchlists",
-    ById: (id: number) => `/watchlists/${id}`,
+    WatchlistTypes: "/types",
+    WatchlistQuantityTypes: "/allocation-types",
+    WatchlistByName: (name: string) => `/@${name}`,
+    MyWatchlists: `/me`,
+    WatchlistItems: (watchlistId: number) => `/${watchlistId}/items`,
+    AddWatchlistItem: `/add-item`,
+    AddWatchlistItemsBulk: (watchlistId: number) => `/add-items/${watchlistId}`,
+    DeleteWatchlistItem: (itemId: number) => `/item/${itemId}`,
+    DeleteWatchlist: (watchlistId: number) => `/${watchlistId}`,
   },
   FavouriteStocks: {
     BaseVersion: "v1",

@@ -57,18 +57,27 @@ export default function Header() {
 
   return (
     <header className="sticky top-0 z-50 bg-background/80 backdrop-blur">
-      <div className="mx-auto flex h-20 max-w-7xl items-center justify-between px-6">
+      <div className="mx-auto flex h-20 max-w-7xl xl:max-w-3xl items-center justify-between px-6">
         <div className="flex items-center gap-8">
           <Link
             href="/platform"
             className="flex items-center gap-3 text-lg font-semibold tracking-tight"
           >
             <Image
+              src="/images/sparrow-logo-black.png"
+              alt="Sparrow Logo"
+              width={25}
+              height={25}
+              priority
+              className="block dark:hidden"
+            />
+            <Image
               src="/images/sparrow-logo-white.png"
               alt="Sparrow Logo"
               width={25}
               height={25}
               priority
+              className="hidden dark:block"
             />
             Sparrow
           </Link>
@@ -169,7 +178,7 @@ export default function Header() {
               <DropdownMenuGroup className="flex flex-col gap-1.5">
                 <DropdownMenuItem asChild>
                   <Link
-                    href="/platform/account"
+                    href={`/trader/${user?.profile.username}`}
                     className="flex items-center gap-2 cursor-pointer"
                   >
                     <UserRound className="h-4 w-4" />

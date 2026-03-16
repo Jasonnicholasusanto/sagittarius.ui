@@ -8,6 +8,8 @@ import Onboarding, { type OnboardingFormValues } from "./components/onboarding";
 import { useUser } from "@/providers/user-provider";
 import { toast } from "sonner";
 import { createProfile, getUserProfile } from "@/lib/data/me";
+import FadeContent from "@/components/fade-content";
+import { SidebarPanel } from "@/components/layout/platform/sidebar-panel";
 
 type Props = {
   children: ReactNode;
@@ -52,16 +54,25 @@ export default function PlatformShell({ children }: Props) {
   }
 
   return (
-    <div className="min-h-screen bg-background text-foreground">
-      <Header />
+    <FadeContent blur={true} duration={3000} initialOpacity={0}>
+      <div className="min-h-screen bg-background text-foreground">
+        <Header />
+        <Onboarding
+          open={showOnboarding}
+          isSubmitting={isSaving}
+          onSubmit={handleOnboardingSubmit}
+        />
 
-      <Onboarding
-        open={showOnboarding}
-        isSubmitting={isSaving}
-        onSubmit={handleOnboardingSubmit}
-      />
+        <div className="mx-auto flex w-full max-w-400 gap-6 px-6 py-8">
+          <main className="min-w-0 flex-1">{children}</main>
 
-      <main className="mx-auto max-w-7xl px-6 py-8">{children}</main>
-    </div>
+          <aside className="hidden w-85 shrink-0 xl:block">
+            <div className="sticky top-24">
+              <SidebarPanel />
+            </div>
+          </aside>
+        </div>
+      </div>
+    </FadeContent>
   );
 }
