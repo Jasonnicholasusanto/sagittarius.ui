@@ -38,6 +38,7 @@ import {
 import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
 import { useUser } from "@/providers/user-provider";
 import { parseFullName } from "@/lib/utils/parseName";
+import { usePathname } from "next/dist/client/components/navigation";
 
 const navItems = [
   { label: "Dashboard", href: "/platform", icon: LayoutDashboard },
@@ -48,6 +49,7 @@ const navItems = [
 
 export default function Header() {
   const { user } = useUser();
+  const pathname = usePathname();
   const { firstName, lastName } = parseFullName(user?.profile?.full_name);
 
   async function handleLogout() {
@@ -57,7 +59,7 @@ export default function Header() {
 
   return (
     <header className="sticky top-0 z-50 bg-background/80 backdrop-blur">
-      <div className="mx-auto flex h-20 max-w-7xl xl:max-w-3xl items-center justify-between px-6">
+      <div className="mx-auto flex h-20 max-w-440 items-center justify-between">
         <div className="flex items-center gap-8">
           <Link
             href="/platform"
@@ -83,16 +85,23 @@ export default function Header() {
           </Link>
 
           <nav className="hidden md:flex items-center gap-6">
-            {navItems.map(({ label, href, icon: Icon }) => (
-              <Link
-                key={href}
-                href={href}
-                className="flex items-center gap-2 text-sm text-muted-foreground hover:text-foreground transition"
-              >
-                <Icon className="h-4 w-4" />
-                {label}
-              </Link>
-            ))}
+            {navItems.map(({ label, href, icon: Icon }) => {
+              const isActive = pathname === href;
+              return (
+                <Link
+                  key={href}
+                  href={href}
+                  className={`flex items-center gap-2 text-sm transition ${
+                    isActive
+                      ? "text-foreground"
+                      : "text-muted-foreground hover:text-foreground"
+                  }`}
+                >
+                  <Icon className="h-4 w-4" />
+                  {label}
+                </Link>
+              );
+            })}
           </nav>
         </div>
 

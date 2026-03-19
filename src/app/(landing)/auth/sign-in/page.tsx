@@ -17,7 +17,7 @@ export default function LoginPage() {
               height={50}
               priority
             />
-            <p className="text-4xl font-extrabold">Sparrow</p>
+            <p className="text-4xl text-white font-extrabold">Sparrow</p>
           </Link>
           <SignInForm />
           <CopyrightFooter />

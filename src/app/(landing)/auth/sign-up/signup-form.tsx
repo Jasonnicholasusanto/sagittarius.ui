@@ -93,12 +93,12 @@ export function SignUpForm({
                 shadow-xl w-md"
         >
           <CardHeader className="text-center">
-            <CardTitle className="text-xl flex flex-col items-center justify-center gap-5">
+            <CardTitle className="text-xl text-white flex flex-col items-center justify-center gap-5">
               <span>Thank you for signing up!</span>
             </CardTitle>
           </CardHeader>
           <CardContent>
-            <p className="text-center text-sm pb-5">
+            <p className="text-center text-sm text-zinc-400 pb-5">
               We have sent a confirmation link to your email address. Please
               check your inbox and click the link to verify your account.
             </p>
@@ -106,7 +106,7 @@ export function SignUpForm({
           <CardFooter className="flex justify-center">
             <Link
               href="/auth/login"
-              className="underline underline-offset-4 text-sm hover:text-primary"
+              className="underline underline-offset-4 text-sm text-zinc-400 hover:text-primary"
             >
               Back to login
             </Link>
@@ -119,8 +119,10 @@ export function SignUpForm({
                 shadow-xl w-md"
         >
           <CardHeader className="text-center">
-            <CardTitle className="text-xl">Create your account</CardTitle>
-            <CardDescription>
+            <CardTitle className="text-xl text-white">
+              Create your account
+            </CardTitle>
+            <CardDescription className="text-zinc-400">
               Sign up with Google or continue with email
             </CardDescription>
           </CardHeader>
@@ -132,16 +134,18 @@ export function SignUpForm({
                 </div>
 
                 <div className="relative text-center text-sm flex items-center">
-                  <div className="grow border-t border-muted-foreground"></div>
-                  <span className="text-muted-foreground relative z-10 px-2">
+                  <div className="grow border-t border-zinc-400"></div>
+                  <span className="text-zinc-400 relative z-10 px-2">
                     Or continue with
                   </span>
-                  <div className="grow border-t border-muted-foreground"></div>
+                  <div className="grow border-t border-zinc-400"></div>
                 </div>
 
                 <div className="grid gap-4">
                   <div className="grid gap-3">
-                    <Label htmlFor="email">Email</Label>
+                    <Label htmlFor="email" className="text-zinc-400">
+                      Email
+                    </Label>
                     <Input
                       id="email"
                       name="email"
@@ -155,7 +159,9 @@ export function SignUpForm({
                   </div>
 
                   <div className="grid gap-1">
-                    <Label htmlFor="password">Password</Label>
+                    <Label htmlFor="password" className="text-zinc-400">
+                      Password
+                    </Label>
                     <Input
                       id="password"
                       name="password"
@@ -167,13 +173,15 @@ export function SignUpForm({
                       value={password}
                       onChange={(e) => setPassword(e.target.value)}
                     />
-                    <p className="text-muted-foreground text-xs">
+                    <p className="text-zinc-400 text-xs">
                       Use at least 8 characters.
                     </p>
                   </div>
 
                   <div className="grid gap-3">
-                    <Label htmlFor="confirmPassword">Confirm password</Label>
+                    <Label htmlFor="confirmPassword" className="text-zinc-400">
+                      Confirm password
+                    </Label>
                     <Input
                       id="confirmPassword"
                       name="confirmPassword"
@@ -196,7 +204,7 @@ export function SignUpForm({
                   )}
                 </Button>
 
-                <div className="text-center text-sm">
+                <div className="text-center text-sm text-zinc-400">
                   Already have an account?{" "}
                   <Link
                     href="/auth/sign-in"

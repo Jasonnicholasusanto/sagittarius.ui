@@ -69,8 +69,10 @@ export function SignInForm({
                 shadow-xl w-md"
       >
         <CardHeader className="text-center">
-          <CardTitle className="text-xl">Welcome back</CardTitle>
-          <CardDescription>Login with your Google account</CardDescription>
+          <CardTitle className="text-xl text-white">Welcome back</CardTitle>
+          <CardDescription className="text-zinc-400">
+            Login with your Google account
+          </CardDescription>
         </CardHeader>
         <CardContent>
           <form action={formAction}>
@@ -79,15 +81,17 @@ export function SignInForm({
                 <LoginGoogleButton />
               </div>
               <div className="relative text-center text-sm flex items-center">
-                <div className="grow border-t border-muted-foreground"></div>
-                <span className="text-muted-foreground relative z-10 px-2">
+                <div className="grow border-t border-zinc-400"></div>
+                <span className="text-zinc-400 relative z-10 px-2">
                   Or continue with
                 </span>
-                <div className="grow border-t border-muted-foreground"></div>
+                <div className="grow border-t border-zinc-400"></div>
               </div>
               <div className="grid gap-6">
                 <div className="grid gap-3">
-                  <Label htmlFor="email">Email</Label>
+                  <Label htmlFor="email" className="text-zinc-400">
+                    Email
+                  </Label>
                   <Input
                     id="email"
                     type="email"
@@ -98,10 +102,12 @@ export function SignInForm({
                 </div>
                 <div className="grid gap-3">
                   <div className="flex items-center">
-                    <Label htmlFor="password">Password</Label>
+                    <Label htmlFor="password" className="text-zinc-400">
+                      Password
+                    </Label>
                     <a
                       href="/auth/forgot-password"
-                      className="ml-auto text-sm underline-offset-4 hover:underline"
+                      className="text-zinc-400 ml-auto text-sm underline-offset-4 hover:underline"
                     >
                       Forgot your password?
                     </a>
@@ -121,7 +127,7 @@ export function SignInForm({
                 )}
                 <SubmitButton />
               </div>
-              <div className="text-center text-sm">
+              <div className="text-center text-sm text-zinc-400">
                 Don&apos;t have an account?{" "}
                 <Link
                   href="/auth/sign-up"

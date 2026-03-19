@@ -40,7 +40,7 @@ export default function LandingHero() {
             <SplitText
               key={messageIndex}
               text={HERO_MESSAGES[messageIndex]}
-              className="text-4xl font-semibold tracking-tight sm:text-6xl lg:text-7xl"
+              className="text-4xl font-semibold tracking-tight sm:text-6xl lg:text-7xl text-white"
               delay={100}
               duration={1.6}
               ease="power3.out"
@@ -54,7 +54,7 @@ export default function LandingHero() {
             />
           </div>
 
-          <p className="mt-6 max-w-2xl text-sm leading-7 text-muted-foreground sm:text-base">
+          <p className="mt-6 max-w-2xl text-sm leading-7 text-zinc-400 sm:text-base">
             Sparrow helps teams and individuals explore information, surface
             insights, and make decisions with a cleaner, calmer, more focused
             experience.
@@ -69,26 +69,13 @@ export default function LandingHero() {
               asChild
               size="lg"
               variant="ghost"
-              className="min-w-40 rounded-full px-8"
+              className="min-w-40 rounded-full px-8 text-white"
             >
               <Link href="#about">Learn more</Link>
             </Button>
           </div>
         </div>
       </section>
-
-      {/* <section
-          id="about"
-          className="border-t border-border/50 px-6 py-10"
-        >
-          <div className="mx-auto max-w-5xl text-center">
-            <p className="text-sm text-muted-foreground sm:text-base">
-              Designed to feel light, seamless, and intentional — Sparrow
-              combines elegant presentation with practical utility, so users can
-              focus on what matters instead of fighting the interface.
-            </p>
-          </div>
-        </section> */}
     </div>
   );
 }

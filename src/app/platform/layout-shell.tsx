@@ -10,10 +10,17 @@ import { toast } from "sonner";
 import { createProfile, getUserProfile } from "@/lib/data/me";
 import FadeContent from "@/components/fade-content";
 import { SidebarPanel } from "@/components/layout/platform/sidebar-panel";
+import {
+  ResizableHandle,
+  ResizablePanel,
+  ResizablePanelGroup,
+} from "@/components/ui/resizable";
 
 type Props = {
   children: ReactNode;
 };
+
+const HEADER_OFFSET = 80;
 
 export default function PlatformShell({ children }: Props) {
   const { user, setUser, authUser } = useUser();
@@ -55,23 +62,57 @@ export default function PlatformShell({ children }: Props) {
 
   return (
     <FadeContent blur={true} duration={3000} initialOpacity={0}>
-      <div className="min-h-screen bg-background text-foreground">
+      <div className="min-h-screen bg-background px-11 text-foreground">
         <Header />
+
         <Onboarding
           open={showOnboarding}
           isSubmitting={isSaving}
           onSubmit={handleOnboardingSubmit}
         />
 
-        <div className="mx-auto flex w-full max-w-400 gap-6 px-6 py-8">
-          <main className="min-w-0 flex-1">{children}</main>
+        <div className="mt-6">
+          <div className="hidden xl:block">
+            <ResizablePanelGroup
+              orientation="horizontal"
+              className="min-h-0 w-full gap-0"
+            >
+              <ResizablePanel defaultSize="70%">
+                <main className="pr-2">{children}</main>
+              </ResizablePanel>
 
-          <aside className="hidden w-85 shrink-0 xl:block">
-            <div className="sticky top-24">
-              <SidebarPanel />
-            </div>
-          </aside>
+              <ResizableHandle />
+
+              <ResizablePanel
+                defaultSize="30%"
+                className="top-0 sticky max-h-30"
+              >
+                <aside
+                  className="sticky pl-2"
+                  style={{
+                    height: `calc(100vh - ${HEADER_OFFSET}px - 2.5rem)`,
+                  }}
+                >
+                  <SidebarPanel />
+                </aside>
+              </ResizablePanel>
+            </ResizablePanelGroup>
+          </div>
         </div>
+        {/* <div className="mt-6">
+          <div className="hidden xl:grid xl:grid-cols-[minmax(0,1fr)_360px] xl:gap-6">
+            <main className="min-w-0">{children}</main>
+
+            <aside
+              className="sticky self-start top-26"
+              style={{
+                height: `calc(100vh - ${HEADER_OFFSET}px - 2.5rem)`,
+              }}
+            >
+              <SidebarPanel />
+            </aside>
+          </div>
+        </div> */}
       </div>
     </FadeContent>
   );
